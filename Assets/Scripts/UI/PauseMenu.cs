@@ -57,6 +57,11 @@ public class PauseMenu : MonoBehaviour
         mixer.SetFloat("MusicVol", Mathf.Log10(sliderValue) * 20);
     }
 
+    public void ExitGame()
+    {
+
+        Application.Quit();
+    }
 
     public void ReloadLevel()
     {
@@ -75,7 +80,7 @@ public class PauseMenu : MonoBehaviour
     public void ActivateMenu()
     {
         pauseMenuMain.SetActive(true);
-
+        Cursor.visible = true;
 
     }
 
@@ -87,12 +92,14 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         PlayerScript.enableMovement = true;
         PlayerScript.LockMouse();
+        Cursor.visible = false;
 
     }
 
     public void ActivateOptions()
     {
         gameIsPaused = true;
+        Cursor.visible = true;
         pauseMenuMain.SetActive(false);
         pauseMenuOptions.SetActive(true);
         PlayerScript.UnlockMouse();

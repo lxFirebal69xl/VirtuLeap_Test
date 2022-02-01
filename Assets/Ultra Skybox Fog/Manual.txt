@@ -1,4 +1,5 @@
-
+implement procedural generation somewhere
+bake and gpu instancing
 write doc and update git
 
 DONE
