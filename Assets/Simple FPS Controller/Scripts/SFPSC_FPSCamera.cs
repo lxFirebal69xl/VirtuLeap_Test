@@ -1,28 +1,4 @@
-﻿/*
-    ███████╗██╗██████╗  ██████╗████████╗  ██████╗ ███████╗██████╗  ██████╗ █████╗ ███╗  ██╗
-    ██╔════╝██║██╔══██╗██╔════╝╚══██╔══╝  ██╔══██╗██╔════╝██╔══██╗██╔════╝██╔══██╗████╗ ██║
-    █████╗  ██║██████╔╝╚█████╗    ██║     ██████╔╝█████╗  ██████╔╝╚█████╗ ██║  ██║██╔██╗██║
-    ██╔══╝  ██║██╔══██╗ ╚═══██╗   ██║     ██╔═══╝ ██╔══╝  ██╔══██╗ ╚═══██╗██║  ██║██║╚████║
-    ██║     ██║██║  ██║██████╔╝   ██║     ██║     ███████╗██║  ██║██████╔╝╚█████╔╝██║ ╚███║
-    ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝    ╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝  ╚════╝ ╚═╝  ╚══╝
-
-     █████╗  █████╗ ███╗   ███╗███████╗██████╗  █████╗ 
-    ██╔══██╗██╔══██╗████╗ ████║██╔════╝██╔══██╗██╔══██╗
-    ██║  ╚═╝███████║██╔████╔██║█████╗  ██████╔╝███████║
-    ██║  ██╗██╔══██║██║╚██╔╝██║██╔══╝  ██╔══██╗██╔══██║
-    ╚█████╔╝██║  ██║██║ ╚═╝ ██║███████╗██║  ██║██║  ██║
-     ╚════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
-
-     █████╗  █████╗ ███╗  ██╗████████╗██████╗  █████╗ ██╗     ██╗     ███████╗██████╗ 
-    ██╔══██╗██╔══██╗████╗ ██║╚══██╔══╝██╔══██╗██╔══██╗██║     ██║     ██╔════╝██╔══██╗
-    ██║  ╚═╝██║  ██║██╔██╗██║   ██║   ██████╔╝██║  ██║██║     ██║     █████╗  ██████╔╝
-    ██║  ██╗██║  ██║██║╚████║   ██║   ██╔══██╗██║  ██║██║     ██║     ██╔══╝  ██╔══██╗
-    ╚█████╔╝╚█████╔╝██║ ╚███║   ██║   ██║  ██║╚█████╔╝███████╗███████╗███████╗██║  ██║
-     ╚════╝  ╚════╝ ╚═╝  ╚══╝   ╚═╝   ╚═╝  ╚═╝ ╚════╝ ╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝
-
-    █▄▄ █▄█   ▀█▀ █ █ █▀▀   █▀▄ █▀▀ █ █ █▀▀ █   █▀█ █▀█ █▀▀ █▀█
-    █▄█  █     █  █▀█ ██▄   █▄▀ ██▄ ▀▄▀ ██▄ █▄▄ █▄█ █▀▀ ██▄ █▀▄
-*/
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +7,7 @@ using UnityEngine;
 public class SFPSC_FPSCamera : MonoBehaviour
 {
     public static SFPSC_FPSCamera cam;
+    public SFPSC_PlayerMovement playerScript;
     private Camera cam_;
     
     public float sensitivity = 3;
@@ -55,6 +32,7 @@ public class SFPSC_FPSCamera : MonoBehaviour
     public float rotZ = 0.0f;
     private void Update()
     {
+        if (playerScript.enableMovement) { 
         // Mouse input
         mouseX = Input.GetAxis("Mouse X") * sensitivity;
         mouseY = Input.GetAxis("Mouse Y") * sensitivity;
@@ -68,6 +46,7 @@ public class SFPSC_FPSCamera : MonoBehaviour
         transform.localRotation = Quaternion.Euler(rotX, rotY, rotZ);
         player.Rotate(Vector3.up * mouseX);
         transform.position = CameraPosition.position;
+    }
     }
 
     public void Shake(float magnitude, float duration)

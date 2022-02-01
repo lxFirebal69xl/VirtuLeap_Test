@@ -1,21 +1,4 @@
-﻿/*
-    ███████╗██╗██████╗  ██████╗████████╗  ██████╗ ███████╗██████╗  ██████╗ █████╗ ███╗  ██╗
-    ██╔════╝██║██╔══██╗██╔════╝╚══██╔══╝  ██╔══██╗██╔════╝██╔══██╗██╔════╝██╔══██╗████╗ ██║
-    █████╗  ██║██████╔╝╚█████╗    ██║     ██████╔╝█████╗  ██████╔╝╚█████╗ ██║  ██║██╔██╗██║
-    ██╔══╝  ██║██╔══██╗ ╚═══██╗   ██║     ██╔═══╝ ██╔══╝  ██╔══██╗ ╚═══██╗██║  ██║██║╚████║
-    ██║     ██║██║  ██║██████╔╝   ██║     ██║     ███████╗██║  ██║██████╔╝╚█████╔╝██║ ╚███║
-    ╚═╝     ╚═╝╚═╝  ╚═╝╚═════╝    ╚═╝     ╚═╝     ╚══════╝╚═╝  ╚═╝╚═════╝  ╚════╝ ╚═╝  ╚══╝
-
-    ██████╗ ██╗      █████╗ ██╗   ██╗███████╗██████╗   ███╗   ███╗ █████╗ ██╗   ██╗███████╗███╗   ███╗███████╗███╗  ██╗████████╗
-    ██╔══██╗██║     ██╔══██╗╚██╗ ██╔╝██╔════╝██╔══██╗  ████╗ ████║██╔══██╗██║   ██║██╔════╝████╗ ████║██╔════╝████╗ ██║╚══██╔══╝
-    ██████╔╝██║     ███████║ ╚████╔╝ █████╗  ██████╔╝  ██╔████╔██║██║  ██║╚██╗ ██╔╝█████╗  ██╔████╔██║█████╗  ██╔██╗██║   ██║   
-    ██╔═══╝ ██║     ██╔══██║  ╚██╔╝  ██╔══╝  ██╔══██╗  ██║╚██╔╝██║██║  ██║ ╚████╔╝ ██╔══╝  ██║╚██╔╝██║██╔══╝  ██║╚████║   ██║   
-    ██║     ███████╗██║  ██║   ██║   ███████╗██║  ██║  ██║ ╚═╝ ██║╚█████╔╝  ╚██╔╝  ███████╗██║ ╚═╝ ██║███████╗██║ ╚███║   ██║   
-    ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝  ╚═╝     ╚═╝ ╚════╝    ╚═╝   ╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚══╝   ╚═╝   
-
-    █▄▄ █▄█   ▀█▀ █ █ █▀▀   █▀▄ █▀▀ █ █ █▀▀ █   █▀█ █▀█ █▀▀ █▀█
-    █▄█  █     █  █▀█ ██▄   █▄▀ ██▄ ▀▄▀ ██▄ █▄▄ █▄█ █▀▀ ██▄ █▀▄
-*/
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,7 +10,7 @@ public class SFPSC_PlayerMovement : MonoBehaviour
     private static Vector3 vecZero = Vector3.zero;
     private Rigidbody rb;
 
-    private bool enableMovement = true;
+    public bool enableMovement = true;
 
     [Header("Movement properties")]
     public float walkSpeed = 8.0f;
@@ -49,9 +32,22 @@ public class SFPSC_PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = this.GetComponent<Rigidbody>();
-
+        Cursor.lockState = CursorLockMode.Locked;
         TryGetWallRun();
         TryGetGrapplingHook();
+    }
+
+
+  public void LockMouse()
+    {
+
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void UnlockMouse()
+    {
+
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     public void TryGetWallRun()
@@ -72,6 +68,7 @@ public class SFPSC_PlayerMovement : MonoBehaviour
     private float prevY;
     private void FixedUpdate()
     {
+        if (enableMovement) { 
         if ((wallRun != null && wallRun.IsWallRunning) || (grapplingHook != null && grapplingHook.IsGrappling))
             isGrounded = false;
         else
@@ -109,6 +106,7 @@ public class SFPSC_PlayerMovement : MonoBehaviour
         else
             // Air control
             rb.velocity = ClampSqrMag(rb.velocity + inputForce * Time.fixedDeltaTime, rb.velocity.sqrMagnitude);
+    }
     }
 
     private static Vector3 ClampSqrMag(Vector3 vec, float sqrMag)
