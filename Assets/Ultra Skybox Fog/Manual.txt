@@ -1,7 +1,4 @@
-shaders
-1 MORE PUZZLE
-animations
-main menu
-sounds and music
-swap fire fx
-font
+
+write doc and update git
+
+DONE

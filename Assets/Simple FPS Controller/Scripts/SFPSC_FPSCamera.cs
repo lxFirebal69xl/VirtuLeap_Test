@@ -27,7 +27,7 @@ public class SFPSC_FPSCamera : MonoBehaviour
         Cursor.visible = false;
     }
     
-    private float rotX = 0.0f, rotY = 0.0f;
+    private float rotX = 0.0f, rotY = 180.0f;
     [HideInInspector]
     public float rotZ = 0.0f;
     private void Update()
